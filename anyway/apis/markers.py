@@ -14,6 +14,7 @@ MARKERS = [
 
 @api.route('/')
 class MarkersList(Resource):
+
     @api.doc('list_markers')
     @api.marshal_list_with(marker)
     def get(self):
@@ -25,6 +26,7 @@ class MarkersList(Resource):
 @api.param('id', 'The marker identifier')
 @api.response(404, 'Marker not found')
 class Marker(Resource):
+
     @api.doc('get_marker')
     @api.marshal_with(marker)
     def get(self, id):
