@@ -68,6 +68,7 @@ lazy-object-proxy==1.4.2
 lxml==4.4.1
 Mako==1.1.0
 MarkupSafe==1.1.1
+marshmallow==3.2.2
 mccabe==0.6.1
 more-itertools==7.2.0
 newrelic==5.2.1.129

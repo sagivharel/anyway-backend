@@ -33,9 +33,9 @@ app.config['OAUTH_CREDENTIALS'] = {
         'secret': os.environ.get('GOOGLE_LOGIN_CLIENT_SECRET')
     }
 }
+app.config['RESTPLUS_MASK_SWAGGER'] = False
 
 db = SQLAlchemy(app)
-
 assets = Environment()
 assets.init_app(app)
 assets_env = AssetsEnvironment(os.path.join(utilities._PROJECT_ROOT, 'static'), '/static')
@@ -46,8 +46,8 @@ CORS(app, resources={r"/location-subscription": {"origins": "*"}, r"/report-prob
 
 babel = Babel(app)
 
-SESSION_HIGHLIGHTPOINT_KEY = 'gps_highlightpoint_created'
-
-content_encoding = 'cp1255'
-
 Compress(app)
+
+
+from anyway.apis import api
+api.init_app(app)

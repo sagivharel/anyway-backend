@@ -8,11 +8,11 @@ from ..core.models import AccidentMarker
 
 from flask_restplus import Namespace, Resource, fields
 from openpyxl import load_workbook
-
-# from webargs import fields, validate
-# from webargs.flaskparser import use_args, use_kwargs, parser, abort
+from dateutil import parser as date_parser
 
 ns_rsa = Namespace('rsa', description='RSA related operations')
+
+load_model = ns_rsa.model("Model", {"message": fields.String})
 
 
 @ns_rsa.route('/load', endpoint='load')
@@ -23,10 +23,12 @@ class RSA(Resource):
 
     @ns_rsa.param('filename', 'RSA file path')
     @ns_rsa.expect(parser)
+    @ns_rsa.marshal_with(load_model)
     def get(self):
         args = self.parser.parse_args()
         print('file name: ', args['filename'])
-        return self.parse(args['filename'])
+        self.parse(args['filename'])
+        return {"message": "The file was uploaded successfully"}
 
     def _iter_rows(self, filename):
         workbook = load_workbook(filename, read_only=True)
@@ -48,7 +50,7 @@ class RSA(Resource):
             vehicle_type = row[2].value
             coordinates = row[3].value
             video_link = row[4].value
-            timestamp = parser.parse(row[5].value, dayfirst=True)
+            timestamp = date_parser.parse(row[5].value, dayfirst=True)
             if not violation:
                 continue
 

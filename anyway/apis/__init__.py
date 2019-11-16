@@ -6,8 +6,7 @@ from .rsa import ns_rsa as rsa_api
 api = Api(
     title='Anyway',
     version='1.0',
-    description='Anyway apis',
-    # All API metadatas
+    description='Anyway API'
 )
 
 api.add_namespace(markers_api, path='/markers')
