@@ -1,10 +1,9 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from anyway.core import config
+from anyway.core import config, utils
 from webassets import Environment as AssetsEnvironment
 from flask_babel import Babel, gettext
-from anyway.core import  utilities
 from flask_assets import Environment
 from flask_cors import CORS
 from flask_compress import Compress
@@ -16,10 +15,10 @@ initializes a Flask instance with default values
 """
 app = Flask(
     "anyway",
-    template_folder=os.path.join(_PROJECT_ROOT, 'templates'),
-    static_folder=os.path.join(_PROJECT_ROOT, 'static'))
+    template_folder=os.path.join(config._PROJECT_ROOT, 'templates'),
+    static_folder=os.path.join(config._PROJECT_ROOT, 'static'))
 app.config.from_object(config)
-app.config['BABEL_TRANSLATION_DIRECTORIES'] = os.path.join(_PROJECT_ROOT, 'translations')
+app.config['BABEL_TRANSLATION_DIRECTORIES'] = os.path.join(config._PROJECT_ROOT, 'translations')
 app.config['SECURITY_REGISTERABLE'] = False
 app.config['SECURITY_USER_IDENTITY_ATTRIBUTES'] = 'username'
 app.config['BABEL_DEFAULT_LOCALE'] = 'he'
@@ -38,7 +37,7 @@ app.config['RESTPLUS_MASK_SWAGGER'] = False
 db = SQLAlchemy(app)
 assets = Environment()
 assets.init_app(app)
-assets_env = AssetsEnvironment(os.path.join(utilities._PROJECT_ROOT, 'static'), '/static')
+assets_env = AssetsEnvironment(os.path.join(config._PROJECT_ROOT, 'static'), '/static')
 
 CORS(app, resources={r"/location-subscription": {"origins": "*"}, r"/report-problem": {"origins": "*"}})
 

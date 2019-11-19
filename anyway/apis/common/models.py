@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import json
 import datetime
 import logging
@@ -25,18 +22,15 @@ from sqlalchemy import (Column,
 
 from sqlalchemy.orm import relationship, load_only
 
-db_encoding = 'utf-8'
-
-from anyway.core import localization
-from anyway.core.utilities import decode_hebrew
+from anyway.core.localization import Localization
+from anyway.core.utils import Utils
 from anyway.core.constants import CONST
 from anyway.core.database import Base
 from anyway import db
 
 MarkerResult = namedtuple('MarkerResult', ['accident_markers', 'rsa_markers', 'total_records'])
-
 logging.basicConfig(level=logging.DEBUG)
-
+db_encoding = 'utf-8'
 
 class Point(object):
     id = Column(Integer(), primary_key=True)
@@ -56,9 +50,9 @@ class MarkerMixin(Point):
     @staticmethod
     def format_description(field, value):
         # if the field's value is a static localizable field, fetch it.
-        if field in localization.get_supported_tables():
-            value = decode_hebrew(localization.get_field(field, value), db_encoding)
-        name = decode_hebrew(localization.get_field(field), db_encoding)
+        if field in Localization.get_supported_tables():
+            value = Utils.decode_hebrew(Localization.get_field(field, value), db_encoding)
+        name = Utils.decode_hebrew(Localization.get_field(field), db_encoding)
         return u"{0}: {1}".format(name, value)
 
 
@@ -484,7 +478,6 @@ class Involved(Base):
 
 
 class Vehicle(Base):
-
     __tablename__ = "vehicles"
     id = Column(BigInteger(), primary_key=True)
     provider_and_id = Column(BigInteger())

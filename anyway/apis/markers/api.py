@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from flask_restplus import Namespace, Resource, fields
 
 markers_api = Namespace('markers', description='Markers related operations')

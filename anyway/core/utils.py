@@ -1,3 +1,5 @@
+import six
+
 class Utils():
 
     @staticmethod
@@ -17,3 +19,10 @@ class Utils():
             yield batch
             if iteration_stopped:
                 break
+
+    @staticmethod
+    def decode_hebrew(s, encoding="cp1255"):
+        if six.PY3:
+            return s
+        else:
+            return s.decode(encoding)

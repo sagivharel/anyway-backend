@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 
 #
@@ -25,3 +24,5 @@ LANGUAGES = {
     'en': 'English',
     'he': 'עברית',
 }
+
+_PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..')
