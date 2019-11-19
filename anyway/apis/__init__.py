@@ -1,7 +1,7 @@
 from flask_restplus import Api
 
-from .markers import api as markers_api
-from .rsa import ns_rsa as rsa_api
+from .markers.api import markers_api
+from .rsa.api import rsa_api
 
 api = Api(
     title='Anyway',

@@ -16,11 +16,9 @@ SQLALCHEMY_POOL_RECYCLE = 60
 
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 ENTRIES_PER_PAGE = os.environ.get('ENTRIES_PER_PAGE', 1000)
-
-SESSION_HIGHLIGHTPOINT_KEY = 'gps_highlightpoint_created'
-content_encoding = 'cp1255'
-
-SECRET_KEY = 'aiosdjsaodjoidjioewnioewfnoeijfoisdjf'
+SESSION_HIGHLIGHTPOINT_KEY = os.environ.get('SESSION_HIGHLIGHTPOINT_KEY')
+CONTENT_ENCODING = os.environ.get('CONTENT_ENCODING')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # available languages
 LANGUAGES = {

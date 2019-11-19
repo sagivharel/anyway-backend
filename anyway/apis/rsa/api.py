@@ -1,32 +1,33 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import json, os
 
 from anyway import db
 from anyway.core.utils import Utils
-from ..core.constants import CONST
-from ..core.models import AccidentMarker
+from anyway.core.constants import CONST
+from anyway.apis.common.models import AccidentMarker
 
 from flask_restplus import Namespace, Resource, fields
 from openpyxl import load_workbook
 from dateutil import parser as date_parser
 
-ns_rsa = Namespace('rsa', description='RSA related operations')
+rsa_api = Namespace('rsa', description='RSA related operations')
 
-load_model = ns_rsa.model("Model", {"message": fields.String})
+load_model = rsa_api.model("Model", {"message": fields.String})
 
 
-@ns_rsa.route('/load', endpoint='load')
-@ns_rsa.response(404, 'Endpoint was not found')
+@rsa_api.route('/load', endpoint='load')
+@rsa_api.response(404, 'Endpoint was not found')
 class RSA(Resource):
-    parser = ns_rsa.parser()
+    parser = rsa_api.parser()
     parser.add_argument('filename', type=str, location='args')
 
-    @ns_rsa.param('filename', 'RSA file path')
-    @ns_rsa.expect(parser)
-    @ns_rsa.marshal_with(load_model)
+    @rsa_api.param('filename', 'RSA file path')
+    @rsa_api.expect(parser)
+    @rsa_api.marshal_with(load_model)
     def get(self):
         args = self.parser.parse_args()
-        print('file name: ', args['filename'])
         self.parse(args['filename'])
         return {"message": "The file was uploaded successfully"}
 
@@ -88,4 +89,4 @@ class RSA(Resource):
                                    WHERE geom IS NULL;')
             db.session.commit()
         else:
-            ns_rsa.abort(404)
+            rsa_api.abort(404)
