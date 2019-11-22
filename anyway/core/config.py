@@ -1,0 +1,28 @@
+import os
+
+#
+# This is the configuration file of the application
+#
+# Please make sure you don't store here any secret information and use environment
+# variables
+#
+
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+if SQLALCHEMY_DATABASE_URI is None:
+    raise Exception('Please, set the DATABASE_URL environment variable to be postgresql://postgres@localhost/anyway')
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+SQLALCHEMY_POOL_RECYCLE = 60
+
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+ENTRIES_PER_PAGE = os.environ.get('ENTRIES_PER_PAGE', 1000)
+SESSION_HIGHLIGHTPOINT_KEY = os.environ.get('SESSION_HIGHLIGHTPOINT_KEY')
+CONTENT_ENCODING = os.environ.get('CONTENT_ENCODING')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+# available languages
+LANGUAGES = {
+    'en': 'English',
+    'he': 'עברית',
+}
+
+_PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..')
