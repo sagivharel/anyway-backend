@@ -12,9 +12,8 @@ There are 2 Dockerfiles in this project :
 
 #### ReBuild & ReRun
 If you change the docker files and want to re-run the docker-compose you need to:
-`docker-compose build`
-adn then:
-`docker-compose up`
+
+`docker-compose build` and then: `docker-compose up`
 
 
 docker-postgis - Dockerfile, initdb-postgis.sh and update-postgis.sh where taken from here:
