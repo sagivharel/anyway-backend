@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   anyway:
-    build: application_docker
+    build: .
     ports:
       - "8080:5000"
     environment:

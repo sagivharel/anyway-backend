@@ -6,7 +6,7 @@
 
 There are 2 Dockerfiles in this project :
 1) The PostgreSQL DB docker at the "db_docker" folder
-2) The actual application docker at the "application_docker"
+2) The actual application docker is the Dockerfile
 
 
 
