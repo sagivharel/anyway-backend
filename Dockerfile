@@ -6,19 +6,23 @@ RUN apt-get clean && \
     apt-get install -y \
         build-essential \
         postgresql-client \
-        python-pip && \
+        python-dev \
+        libpq-dev \
+        virtualenv && \
+
     apt-get clean
 
 WORKDIR /anyway
 
-# First copy only the requirement.txt, so changes in other files won't trigger
-# a full pip reinstall
 COPY requirements.txt /anyway
-RUN pip install -U setuptools wheel
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
 
+RUN virtualenv /venv3 -p python3
+
+# First copy only the requirement.txt, so changes in other files won't trigger a full pip reinstall
+RUN . /venv3/bin/activate && \
+                    pip install -U setuptools wheel && \
+                    pip install --upgrade pip && \
+                    pip install -r requirements.txt
 COPY . /anyway
-
 
 CMD tail -f /dev/null
