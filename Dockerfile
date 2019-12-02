@@ -26,3 +26,4 @@ RUN . /venv3/bin/activate && \
 COPY . /anyway
 
 CMD tail -f /dev/null
+# CMD . /venv3/bin/activate && python app.py # btter be flask or similar which will run anyway.app
