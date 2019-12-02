@@ -4,7 +4,8 @@
 ------
 
 # ANYWAY’s docker environment
-===========================
+-----------------------
+
 Read more about DOCKER at [Offical docs](https://docs.docker.com/) or at [Github project] (https://github.com/docker/docker)
 
 
@@ -19,8 +20,7 @@ Instructions
 **3.** Open "Docker terminal", go to the **anyway** directory and run:
     `docker-compose up`
 
-**4.** **You're all set!** ANYWAY is up and running - go to http://127.0.0.1:5000
-**You only need to load the data :)***
+**4.** **You're all set!** ANYWAY is up and running - go to http://127.0.0.1:5000 **Now you only need to load the data :)***
 
 
 ### FYI
