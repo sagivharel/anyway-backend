@@ -6,7 +6,6 @@ RUN apt-get clean && \
     apt-get install -y \
         build-essential \
         postgresql-client \
-        python-dev \
         libpq-dev \
         virtualenv && \
 
@@ -25,5 +24,5 @@ RUN . /venv3/bin/activate && \
                     pip install -r requirements.txt
 COPY . /anyway
 
-CMD tail -f /dev/null
-# CMD FLASK_APP=anyway.app FLASK_DEBUG=1 flask run
+
+CMD . /venv3/bin/activate && FLASK_APP=anyway FLASK_DEBUG=1 flask run --host 0.0.0.0
