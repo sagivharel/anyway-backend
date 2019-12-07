@@ -11,16 +11,16 @@ Read more about DOCKER at [Offical docs](https://docs.docker.com/) or at [Github
 
 ### Instructions
 -----------------------
-* Please complete ANYWAY’s [“getting the code” section] (https://github.com/hasadna/anyway#getting-the-code-and-adding-ci-to-your-forked-repository) before starting
+* Please complete ANYWAY’s [“getting the code” section](https://github.com/hasadna/anyway#getting-the-code-and-adding-ci-to-your-forked-repository) before starting
 
-**1.** [Get the code] (https://github.com/hasadna/anyway#getting-the-code-and-adding-ci-to-your-forked-repository)
+**1.** [Get the code of anyway](https://github.com/hasadna/anyway#getting-the-code-and-adding-ci-to-your-forked-repository)
 
-**2.** [Install Docker] (https://docs.docker.com/install/)
+**2.** [Install Docker](https://docs.docker.com/install/)
 
-**3.** Open "Docker terminal", go to the **anyway** directory and run:
+**3.** Open "Docker terminal" / "terminal", go to the **anyway** directory and run:
     `docker-compose up`
 
-**4.** **You're all set!** ANYWAY is up and running - go to http://127.0.0.1:5000 **Now you only need to load the data :)***
+**4.** **You're almost all set!** ANYWAY is up and running - go to http://0.0.0.0:5000 **Now you only need to load the data :)***
 
 
 ### FYI
