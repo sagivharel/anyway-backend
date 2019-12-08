@@ -1,0 +1,38 @@
+language: python
+
+cache:
+  - pip
+  - yarn
+
+python:
+  - 3.5
+  - 3.6
+  - 3.7
+
+addons:
+  sauce_connect: true
+  postgresql: 9.6
+  apt:
+    packages:
+    - postgresql-9.6-postgis-2.4
+
+env:
+  global:
+    - DATABASE_URL='postgresql://postgres@localhost/anyway'
+
+services:
+  - postgresql
+
+sudo: false
+
+before_install:
+  - pip install -U pytest
+
+install:
+  - pip install -r requirements.txt
+
+before_script:
+  - psql -c 'create database anyway;' -U postgres
+
+script:
+  - pylint -j $(nproc) anyway/core/config.py || exit 0
