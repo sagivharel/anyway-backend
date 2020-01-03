@@ -6,7 +6,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - DATABASE_URL=postgresql://anyway:anyway@db/anyway
+      - DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres
     volumes:
       - .:/anyway
     restart: always
@@ -16,9 +16,9 @@ services:
   db:
     build: db_docker 
     environment:
-      - POSTGRES_PASSWORD=anyway
-      - POSTGRES_USER=anyway
-      - POSTGRES_DB=anyway
+      - POSTGRES_PASSWORD=admin2020
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
     volumes:
       - db_data:/var/lib/postgresql/data  
     restart: always
