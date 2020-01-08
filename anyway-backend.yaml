@@ -40,6 +40,7 @@ spec:
             secretKeyRef:
               key: DATABASE_URL
               name: literal-token
+        image: gcr.io/anyway-backend/anyway-backend@sha256:aa469fc8d761b09b7a9aaa163bfe00126447f67a600dfd202a09e42e0edbb980
         imagePullPolicy: IfNotPresent
         name: anyway-backend
         resources: {}
