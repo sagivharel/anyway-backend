@@ -7,5 +7,7 @@ steps:
   args:
   - run
   - --filename=anyway-backend.yaml
+  - --image='gcr.io/$PROJECT_ID/$PROJECT_ID:$BUILD_ID'
   - --location=europe-west3
   - --cluster=anyway-dev-cluster-1
+  - en
