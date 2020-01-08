@@ -6,6 +6,6 @@ steps:
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run
-  - --filename=kubernetes.yml
+  - --filename=anyway-backend.yaml
   - --location=europe-west3
   - --cluster=anyway-dev-cluster-1
