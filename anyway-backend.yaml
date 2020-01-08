@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "1"
+    deployment.kubernetes.io/revision: "2"
     kubectl.kubernetes.io/last-applied-configuration: |
       {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app.kubernetes.io/managed-by":"gcp-cloud-build-deploy"},"name":"anyway-backend","namespace":"default"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"anyway-backend"}},"template":{"metadata":{"labels":{"app":"anyway-backend","app.kubernetes.io/managed-by":"gcp-cloud-build-deploy"}},"spec":{"containers":[{"image":"gcr.io/anyway-backend/anyway-backend@sha256:aa469fc8d761b09b7a9aaa163bfe00126447f67a600dfd202a09e42e0edbb980","name":"anyway-backend"}]}}}}
   creationTimestamp: "2020-01-08T11:37:48Z"
-  generation: 2
+  generation: 6
   labels:
     app.kubernetes.io/managed-by: gcp-cloud-build-deploy
   name: anyway-backend
   namespace: default
-  resourceVersion: "52656"
+  resourceVersion: "93829"
   selfLink: /apis/apps/v1/namespaces/default/deployments/anyway-backend
   uid: 4bdecba9-320b-11ea-bdc8-42010a9c0093
 spec:
@@ -34,18 +34,18 @@ spec:
         app.kubernetes.io/managed-by: gcp-cloud-build-deploy
     spec:
       containers:
-      - image: gcr.io/$PROJECT_ID/$PROJECT_ID:$BUILD_ID
+      - env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: DATABASE_URL
+              name: literal-token
+        image: gcr.io/anyway-backend/anyway-backend@sha256:aa469fc8d761b09b7a9aaa163bfe00126447f67a600dfd202a09e42e0edbb980
         imagePullPolicy: IfNotPresent
         name: anyway-backend
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-      - env: 
-        - name: DATABASE_URL
-            valueFrom:
-                secretKeyRef:
-                    name: literal-token
-                    key: DATABASE_URL
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -54,19 +54,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2020-01-08T11:38:26Z"
-    lastUpdateTime: "2020-01-08T11:38:26Z"
+  - lastTransitionTime: "2020-01-08T11:37:48Z"
+    lastUpdateTime: "2020-01-08T14:14:50Z"
+    message: ReplicaSet "anyway-backend-6787f96cf6" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2020-01-08T14:15:09Z"
+    lastUpdateTime: "2020-01-08T14:15:09Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2020-01-08T11:37:48Z"
-    lastUpdateTime: "2020-01-08T11:38:26Z"
-    message: ReplicaSet "anyway-backend-56c8cdc498" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 2
+  observedGeneration: 6
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1
