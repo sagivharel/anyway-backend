@@ -1,6 +1,8 @@
 steps:
 - name: 'ubuntu'
-  args: ['apt', 'install', 'python-pip']
+  args: ['wget', 'wget https://bootstrap.pypa.io/get-pip.py']
+- name: 'ubuntu'
+  args: ['python', 'get-pip.py']
 - name: 'ubuntu'
   args: ['pip', 'install', 'alembic']
 - name: 'ubuntu'
