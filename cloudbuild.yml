@@ -1,8 +1,8 @@
 steps:
 - name: 'ubuntu'
-  args: ['sudo', 'apt-get', 'update' '-y']
+  args: ['sudo', 'apt-get', 'update', '-y']
 - name: 'ubuntu'
-  args: ['sudo', 'apt-get', 'install' '-y', 'alembic']
+  args: ['sudo', 'apt-get', 'install', '-y', 'alembic']
 - name: 'ubuntu'
   args: ['alembic', 'upgrade', 'Head']
   env:
