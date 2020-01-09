@@ -22,7 +22,7 @@ RUN virtualenv /venv3 -p python3
 RUN . /venv3/bin/activate && \
                     pip install -U setuptools wheel && \
                     pip install --upgrade pip && \
-                    pip install -r requirements.txt
+                    pip install -r requirements.txt && \
 					alembic upgrade head
 COPY . /anyway
 
