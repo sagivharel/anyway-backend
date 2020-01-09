@@ -1,8 +1,8 @@
 steps:
+#- name: 'ubuntu'
+#  args: ['apt-get', 'update', '-y']
 - name: 'ubuntu'
-  args: ['apt-get', 'update', '-y']
-- name: 'ubuntu'
-  args: ['apt-get', 'install', '-y', 'alembic']
+  args: ['pip', 'install', 'alembic']
 - name: 'ubuntu'
   args: ['alembic', 'upgrade', 'Head']
   env:
