@@ -27,7 +27,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: DATABASE_URL
-              name: literal-token
+              name: database-url
         image: gcr.io/anyway-backend/anyway-backend
         imagePullPolicy: IfNotPresent
         name: anyway-backend
