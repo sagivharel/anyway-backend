@@ -1,15 +1,15 @@
 steps:
-- name: 'ubuntu'
+- name: 'ubuntu-1604-xenial-v20200108'
   args: ['apt', 'update']
-- name: 'ubuntu'
+- name: 'ubuntu-1604-xenial-v20200108'
   args: ['apt', 'install', 'python3', 'python3-dev']
-- name: 'ubuntu'
+- name: 'ubuntu-1604-xenial-v20200108'
   args: ['wget', 'wget https://bootstrap.pypa.io/get-pip.py']
-- name: 'ubuntu'
+- name: 'ubuntu-1604-xenial-v20200108'
   args: ['python', 'get-pip.py']
-- name: 'ubuntu'
+- name: 'ubuntu-1604-xenial-v20200108'
   args: ['pip', 'install', 'alembic']
-- name: 'ubuntu'
+- name: 'ubuntu-1604-xenial-v20200108'
   args: ['alembic', 'upgrade', 'Head']
   env:
   - 'DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres'
