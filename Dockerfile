@@ -24,6 +24,4 @@ RUN . /venv3/bin/activate && \
                     pip install -r requirements.txt
 COPY . /anyway
 
-RUN pip install alembic && alembic upgrade head
-
 CMD . /venv3/bin/activate && FLASK_APP=anyway FLASK_DEBUG=1 flask run --host 0.0.0.0
