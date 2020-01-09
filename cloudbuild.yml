@@ -1,4 +1,8 @@
 steps:
+- name: 'ubuntu'
+  args: ['alembic', 'upgrade', 'Head']
+  env:
+  - 'DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA', '.']
 - name: 'gcr.io/cloud-builders/docker'
