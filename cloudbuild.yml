@@ -1,20 +1,20 @@
 steps:
-- name: 'ubuntu-1604-xenial-v20200108'
-  args: ['apt', 'update']
-- name: 'ubuntu-1604-xenial-v20200108'
-  args: ['apt', 'install', 'python3', 'python3-dev']
-- name: 'ubuntu-1604-xenial-v20200108'
-  args: ['wget', 'wget https://bootstrap.pypa.io/get-pip.py']
-- name: 'ubuntu-1604-xenial-v20200108'
-  args: ['python', 'get-pip.py']
-- name: 'ubuntu-1604-xenial-v20200108'
-  args: ['pip', 'install', 'alembic']
-- name: 'ubuntu-1604-xenial-v20200108'
-  args: ['alembic', 'upgrade', 'Head']
-  env:
-  - 'DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA', '.']
+- name: 'ubuntu'
+  args: ['apt', 'update']
+- name: 'ubuntu'
+  args: ['apt', 'install', 'python3', 'python3-dev']
+- name: 'ubuntu'
+  args: ['wget', 'wget https://bootstrap.pypa.io/get-pip.py']
+- name: 'ubuntu'
+  args: ['python', 'get-pip.py']
+- name: 'ubuntu'
+  args: ['pip', 'install', 'alembic']
+- name: 'ubuntu'
+  args: ['alembic', 'upgrade', 'head']
+  env:
+  - 'DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
 - name: 'gcr.io/cloud-builders/gke-deploy'
