@@ -11,7 +11,7 @@ RUN apt-get clean && \
 
     apt-get clean
 
-WORKDIR /anyway
+# WORKDIR /anyway
 
 COPY requirements.txt /anyway
 
