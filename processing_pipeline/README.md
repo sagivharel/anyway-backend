@@ -41,7 +41,7 @@ In your terminal (in the projects' folder):
 
 
 ### Conventions:
-
+- task_id is equal to the variable name
 - task_id is written like this: `[module_name]__[function_name]`
 
 

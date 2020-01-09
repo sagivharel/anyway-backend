@@ -7,6 +7,8 @@ RAW_DATA_CSV_FILES_PATH = Path(PROCESSING_PIPELINE_DAGS_FOLDER_PATH, "csv_files"
 RAW_DATA_CSV_FILES_PATH.mkdir(exist_ok=True, parents=True)
 PROCESSED_DATA_CSV_FILES_PATH = Path(PROCESSING_PIPELINE_DAGS_FOLDER_PATH, "csv_files", "processed_csv_files")
 PROCESSED_DATA_CSV_FILES_PATH.mkdir(exist_ok=True, parents=True)
+FINAL_PROCESSED_DATA_CSV_FILES_PATH = Path(PROCESSING_PIPELINE_DAGS_FOLDER_PATH, "csv_files", "final_processed_csv_files")
+FINAL_PROCESSED_DATA_CSV_FILES_PATH.mkdir(exist_ok=True, parents=True)
 
 
 def load_data(data_date_string, raw_data=False, processed_data=False):
@@ -24,3 +26,22 @@ def load_data(data_date_string, raw_data=False, processed_data=False):
     file_path = Path(csv_files_path, f"H{data_date_string}", file_name)
     df = pd.read_csv(file_path)
     return df
+
+
+def save_processed_data(df, data_date_string, process_name, use_index=True):
+    if not isinstance(df, pd.DataFrame):
+        raise ValueError("df argument is suppose to be a pandas' DataFrame")
+    saved_file_path = Path(PROCESSED_DATA_CSV_FILES_PATH, data_date_string, f"processed__{process_name}.csv")
+    saved_file_path.parent.mkdir(exist_ok=True, parents=True)
+    df.to_csv(saved_file_path, index=use_index)
+
+
+def concat_processed_data(data_date_string): # TODO currently in utils but should move to a better place
+    processed_data_parts = []
+    for file_path in PROCESSED_DATA_CSV_FILES_PATH.glob(f"{data_date_string}/*.csv"):
+        saved_processed_data_part = pd.read_csv(file_path)
+        processed_data_parts.append(saved_processed_data_part)
+
+    processed_data = pd.concat(processed_data_parts, axis=1)
+    saved_file_path = Path(FINAL_PROCESSED_DATA_CSV_FILES_PATH, f"processed__{data_date_string}.csv")
+    processed_data.to_csv(saved_file_path, index=False)
