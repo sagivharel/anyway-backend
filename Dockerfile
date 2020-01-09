@@ -16,7 +16,7 @@ WORKDIR /anyway
 
 COPY requirements.txt /anyway
 COPY  alembic.ini /anyway
-COPY  alembic /anyway
+COPY  alembic /anyway/alembic
 
 
 RUN virtualenv /venv3 -p python3
