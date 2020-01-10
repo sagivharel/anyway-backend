@@ -44,7 +44,6 @@ In your terminal (in the projects' folder):
 - task_id is equal to the variable name
 - task_id is written like this: `[module_name]__[function_name]`
 
-
 # TODOs
 - Get all the data from the Drive / Google's bucket
 - Change the DB to be PostgreSQL
