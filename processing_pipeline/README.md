@@ -41,9 +41,15 @@ In your terminal (in the projects' folder):
 
 
 ### Conventions:
-- task_id is equal to the variable name
-- task_id is written like this: `[module_name]__[function_name]`
+- task_id is equal to the variable name and it's written like this: `[module_name]__[function_name]`
 
 # TODOs
 - Get all the data from the Drive / Google's bucket
 - Change the DB to be PostgreSQL
+
+
+
+
+### useful links:
+- http://michal.karzynski.pl/blog/2017/03/19/developing-workflows-with-apache-airflow/
+- https://airflow.apache.org/docs/stable/best-practices.html
