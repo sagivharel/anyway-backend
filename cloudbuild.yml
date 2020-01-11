@@ -1,7 +1,7 @@
 steps:
 # build anyway-backend image
 - name: 'docker/compose'
-  args: ['build', '-f', 'docker-compose-cloud.yml', '--parallel']
+  args: ['-f', 'docker-compose-cloud.yml', 'build']
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run
