@@ -1,9 +1,9 @@
 steps:
-- name: 'eu.gcr.io/cloud-builders/docker'
+- name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA', '.']
-- name: 'eu.gcr.io/cloud-builders/docker'
+- name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
-- name: 'eu.gcr.io/cloud-builders/gke-deploy'
+- name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run
   - --filename=anyway-backend.yaml
