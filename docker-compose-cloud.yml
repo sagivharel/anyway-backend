@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  anyway:
+    build: .
+    image: 'eu.gcr.io/${PROJECT_ID}/${PROJECT_ID}:${COMMIT_SHA}'
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres
+    volumes:
+      - .:/anyway
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    build: db_docker
+    image: 'eu.gcr.io/${PROJECT_ID}/${PROJECT_ID}-DB:${COMMIT_SHA}'
+    environment:
+      - POSTGRES_PASSWORD=admin2020
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data  
+    restart: always
+
+volumes: 
+  db_data:
