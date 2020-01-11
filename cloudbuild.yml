@@ -1,7 +1,7 @@
 steps:
 # build anyway-backend image
 - name: 'docker/compose'
-  args: ['-f', 'docker-compose-cloud.yml', 'build', 'PROJECT_ID=$PROJECT_ID', 'COMMIT_SHA=$COMMIT_SHA']
+  args: ['build', '-f', 'docker-compose-cloud.yml', '--build-arg', PROJECT_ID=$PROJECT_ID', '--build-arg', 'COMMIT_SHA=$COMMIT_SHA']
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run
