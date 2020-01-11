@@ -4,7 +4,7 @@ metadata:
   name: anyway-backend
 spec:
   progressDeadlineSeconds: 600
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -28,7 +28,7 @@ spec:
             secretKeyRef:
               key: DATABASE_URL
               name: database-url
-        image: gcr.io/anyway-backend/anyway-backend
+        image: eu.gcr.io/anyway-backend/anyway-backend
         imagePullPolicy: IfNotPresent
         name: anyway-backend
         resources: {}
