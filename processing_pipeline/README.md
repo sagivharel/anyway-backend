@@ -25,18 +25,18 @@ The 'dags' folder structure is as follows:
 In your terminal (in the projects' folder):
 - run `export AIRFLOW_HOME=`pwd`/processing_pipeline`
 - run `airflow version`
+- In airflow.cfg change `load_examples = True` to `load_examples = False`
 - run `airflow initdb` # TODO: change this to work with postgresql
 
 
 ### AirFlow UI
-- In airflow.cfg change `load_examples = True` to `load_examples = False`
 In your terminal (in the projects' folder):
 - run `airflow webserver`
 - Go to http://localhost:8080/admin/
 
 
 ### AirFlow Run:
-- run `export AIRFLOW_HOME=`pwd`/processing_pipeline` in your terminal (in the projects' folder)
+- run "export AIRFLOW_HOME=`pwd`/processing_pipeline" in your terminal (in the projects' folder)
 - run `airflow scheduler`
 
 
