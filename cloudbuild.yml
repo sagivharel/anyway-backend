@@ -5,6 +5,11 @@ steps:
   env:
   - 'ANYWAY_BACKEND_IMG=$PROJECT_ID:$COMMIT_SHA'
   - 'ANYWAY_BACKEND_DB_IMG=$PROJECT_ID-db:$COMMIT_SHA'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', '$ANYWAY_BACKEND_IMG', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', '$ANYWAY_BACKEND_DB_IMG', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID-DB:$COMMIT_SHA']
+
 # push anyway-backend image into cloud repository
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
