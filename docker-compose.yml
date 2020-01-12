@@ -3,7 +3,7 @@ version: '3.7'
 services:
   anyway:
     build: .
-    image: 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA'
+    image: ${ANYWAY_BACKEND_IMG}
     ports:
       - "5000:5000"
     environment:
@@ -16,7 +16,7 @@ services:
 
   db:
     build: db_docker
-    image: 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID-DB:$COMMIT_SHA'
+    image: ${ANYWAY_BACKEND_DB_IMG}
     environment:
       - POSTGRES_PASSWORD=admin2020
       - POSTGRES_USER=postgres
