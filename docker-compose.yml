@@ -6,8 +6,6 @@ services:
     image: ${ANYWAY_BACKEND_IMG}
     ports:
       - "5000:5000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres
     volumes:
       - .:/anyway
     restart: always

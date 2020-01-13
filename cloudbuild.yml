@@ -5,6 +5,7 @@ steps:
   env:
   - 'ANYWAY_BACKEND_IMG=$PROJECT_ID:$COMMIT_SHA'
   - 'ANYWAY_BACKEND_DB_IMG=$PROJECT_ID-db:$COMMIT_SHA'
+  - 'DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['tag', '$PROJECT_ID:$COMMIT_SHA', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
 - name: 'gcr.io/cloud-builders/docker'
