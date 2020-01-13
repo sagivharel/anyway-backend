@@ -16,7 +16,7 @@ with Path(PROCESSING_PIPELINE_DAGS_FOLDER_PATH, "pipeline_configuration.yaml").o
 DATA_DATE_STRING = pipeline_configuration["data_date_string"]
 
 
-def load_data(raw_data=False, processed_data=False):
+def load_data(file_name, raw_data=False, processed_data=False):
     if raw_data and processed_data:
         raise ValueError("arguments 'raw_data' and 'processed_data' can't be both True")
     if not raw_data and not processed_data:
@@ -27,7 +27,6 @@ def load_data(raw_data=False, processed_data=False):
     else:  # processed_data == True
         csv_files_path = PROCESSED_DATA_CSV_FILES_PATH
 
-    file_name = "klali_14Nov_1539_AccData.csv"  # TODO change this to be an argument
     file_path = Path(csv_files_path, f"H{DATA_DATE_STRING}", file_name)
     df = pd.read_csv(file_path)
     return df
