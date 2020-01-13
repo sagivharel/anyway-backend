@@ -13,7 +13,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID-DB:$COMMIT_SHA']
+  args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID-db:$COMMIT_SHA']
 # deploy anyway-backend image into kubernetes 
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
