@@ -1,7 +1,7 @@
 FROM ubuntu:19.10
 
 # ARG DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres
-ENV DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 
 # Install system tools
 RUN apt-get clean && \
