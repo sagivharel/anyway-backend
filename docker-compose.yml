@@ -4,7 +4,7 @@ services:
   anyway:
     build: .
     image: ${ANYWAY_BACKEND_IMG}
-    args:
+    environment:
         - DATABASE_URL=${DATABASE_URL}
     ports:
       - "5000:5000"
