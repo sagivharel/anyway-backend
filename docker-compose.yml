@@ -4,7 +4,7 @@ services:
   anyway:
     build: .
     image: ${ANYWAY_BACKEND_IMG}
-    environment:
+    args:
         - DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres
     ports:
       - "5000:5000"
