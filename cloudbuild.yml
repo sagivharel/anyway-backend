@@ -1,7 +1,7 @@
 steps:
 # build anyway-backend image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA', '--build-arg', 'DATABASE_URL=$$DATABASE_URL', '.']
+  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA', '--build-arg', 'DATABASE_URL=$DATABASE_URL', '.']
   secretEnv: ['DATABASE_URL']
 # push anyway-backend image into cloud repository
 - name: 'gcr.io/cloud-builders/docker'
