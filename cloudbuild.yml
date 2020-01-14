@@ -16,7 +16,6 @@ steps:
   - --image=eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA
   - --location=europe-west3
   - --cluster=anyway-dev-cluster-1
-  - en
 
 secrets:
 - kmsKeyName: projects/anyway-backend/locations/europe-west3/keyRings/anyway-backend-keyring/cryptoKeys/DATABASE_URL
