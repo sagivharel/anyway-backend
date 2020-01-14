@@ -13,12 +13,11 @@ steps:
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run
-  - --filename=anyway-backend.yaml
   - --image=eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA
   - --location=europe-west3
   - --cluster=anyway-dev-cluster-1
   - en
-
+# - --filename=anyway-backend.yaml
 secrets:
 - kmsKeyName: projects/anyway-backend/locations/europe-west3/keyRings/anyway-backend-keyring/cryptoKeys/DATABASE_URL
   secretEnv:
