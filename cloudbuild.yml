@@ -15,20 +15,7 @@ steps:
   args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID-db:$COMMIT_SHA']
-# deploy anyway-backend image into kubernetes 
-- name: 'gcr.io/cloud-builders/gke-deploy'
-  args:
-  - run
-  - --filename=anyway-backend.yaml
-  - --image=eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA
-  - --location=europe-west3
-  - --cluster=anyway-dev-cluster-1
-  - en
-- name: 'gcr.io/cloud-builders/gke-deploy'
-  args:
-  - run
-  - --filename=anyway-backend.yaml
-  - --image=eu.gcr.io/$PROJECT_ID/$PROJECT_ID-db:$COMMIT_SHA
-  - --location=europe-west3
-  - --cluster=anyway-dev-cluster-1
-  - en
+# deploy anyway-backend image into  anyway-db-instance-1 VM
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['compute', 'instances', 'update-container', 'anyway-db-instance-1', '--container-image', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID-db:$COMMIT_SHA']
+  
