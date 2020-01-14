@@ -1,21 +1,16 @@
 steps:
 # build anyway-backend image
-- name: 'docker/compose'
-  args: ['build']
-  env:
-  - 'ANYWAY_BACKEND_IMG=$PROJECT_ID:$COMMIT_SHA'
-  - 'ANYWAY_BACKEND_DB_IMG=$PROJECT_ID-db:$COMMIT_SHA'
-  - 'DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres'
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', '$PROJECT_ID:$COMMIT_SHA', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', '$PROJECT_ID-db:$COMMIT_SHA', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID-db:$COMMIT_SHA']
+  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA', '.']
 # push anyway-backend image into cloud repository
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID-db:$COMMIT_SHA']
-# deploy anyway-backend image into  anyway-db-instance-1 VM
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['compute', 'instances', 'update-container', 'anyway-db-instance-1', '--zone', 'europe-west3-a', '--container-image', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID-db:$COMMIT_SHA']
-  
+# deploy anyway-backend image into kubernetes 
+- name: 'gcr.io/cloud-builders/gke-deploy'
+  args:
+  - run
+  - --filename=anyway-backend.yaml
+  - --image=eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA
+  - --location=europe-west3
+  - --cluster=anyway-dev-cluster-1
+  - en
