@@ -17,7 +17,7 @@ steps:
   - en
 
 secrets:
-- kmsKeyName: projects/$PROJECT_ID/locations/europe-west3/keyRings/anyway-backend-keyring/cryptoKeys/DATABASE_URL
+- kmsKeyName: projects/anyway-backend/locations/europe-west3/keyRings/anyway-backend-keyring/cryptoKeys/DATABASE_URL
   secretEnv:
     DATABASE_URL: CiQASV7vvZm4g6J7Zvgo0JW2n7DzJFeSkkTparAnArXNDdHvST4SZACKoLTLOqjm/VhDZeaG0lWreYcw3WRBDdnaBjSRGQMuFJoEGU2vaYGy76/4XcnIXZWdcsIRwZhhZNq7dyRiohp23pQV/czQsPVYqxEw6VbGG/GqvUWjC6lheyQebcO8dCprOuY=
     
