@@ -1,7 +1,7 @@
 steps:
 # build anyway-backend image
 - name: 'docker/compose'
-  args: ['build']
+  args: ['build', '--build-arg',]
   env:
   - 'ANYWAY_BACKEND_IMG=$PROJECT_ID:$COMMIT_SHA'
   - 'ANYWAY_BACKEND_DB_IMG=$PROJECT_ID-db:$COMMIT_SHA'
@@ -21,6 +21,14 @@ steps:
   - run
   - --filename=anyway-backend.yaml
   - --image=eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA
+  - --location=europe-west3
+  - --cluster=anyway-dev-cluster-1
+  - en
+- name: 'gcr.io/cloud-builders/gke-deploy'
+  args:
+  - run
+  - --filename=anyway-backend.yaml
+  - --image=eu.gcr.io/$PROJECT_ID/$PROJECT_ID-db:$COMMIT_SHA
   - --location=europe-west3
   - --cluster=anyway-dev-cluster-1
   - en

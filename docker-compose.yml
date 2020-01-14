@@ -4,15 +4,15 @@ services:
   anyway:
     build: .
     image: ${ANYWAY_BACKEND_IMG}
-    args:
+    environment:
         - DATABASE_URL=postgresql://postgres:admin2020@35.204.59.124:5432/postgres
     ports:
       - "5000:5000"
     volumes:
       - .:/anyway
     restart: always
-#    depends_on:
-#      - db
+    depends_on:
+      - db
 
   db:
     build: db_docker
