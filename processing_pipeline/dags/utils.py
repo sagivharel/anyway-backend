@@ -49,3 +49,21 @@ def concat_processed_data(): # TODO currently in utils but should move to a bett
     processed_data = pd.concat(processed_data_parts, axis=1)
     saved_file_path = Path(FINAL_PROCESSED_DATA_CSV_FILES_PATH, f"processed__{DATA_DATE_STRING}.csv")
     processed_data.to_csv(saved_file_path, index=False)
+
+
+def get_upstream_tasks_outputs(context, with_task_ids_as_keys=False, remove_none_values=False):
+    task_ids = context['task'].upstream_task_ids
+    task_outputs = context['task_instance'].xcom_pull(task_ids=task_ids)
+
+    if with_task_ids_as_keys:
+        task_id_to_task_output = {}
+        for task_index, task_id in enumerate(task_ids):
+            task_output = task_outputs[task_index]
+            if remove_none_values and task_output is None:
+                continue
+            task_id_to_task_output[task_id] = task_output
+        return task_id_to_task_output
+    else:
+        if remove_none_values:
+            task_outputs = [task_output for task_output in task_outputs if task_output is not None]
+        return task_outputs
