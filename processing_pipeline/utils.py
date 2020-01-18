@@ -1,6 +1,7 @@
 import pandas as pd
 from pathlib import Path
 import yaml
+from constants import TASK_INSTANCE, TASK
 
 PROCESSING_PIPELINE_DAGS_FOLDER_PATH = Path(__file__).parent
 RAW_DATA_CSV_FILES_PATH = Path(PROCESSING_PIPELINE_DAGS_FOLDER_PATH, "csv_files", "raw_csv_files")
@@ -32,15 +33,19 @@ def load_data(file_name, raw_data=False, processed_data=False):
     return df
 
 
-def save_processed_data(df, process_name, use_index=True):
+def get_saved_file_path(process_task_id):
+    saved_file_path = Path(PROCESSED_DATA_CSV_FILES_PATH, DATA_DATE_STRING, f"processed__{process_task_id}.csv")
+    saved_file_path.parent.mkdir(exist_ok=True, parents=True)
+    return saved_file_path
+
+
+def save_processed_data(df, saved_file_path, use_index=True):
     if not isinstance(df, pd.DataFrame):
         raise ValueError("df argument is suppose to be a pandas' DataFrame")
-    saved_file_path = Path(PROCESSED_DATA_CSV_FILES_PATH, DATA_DATE_STRING, f"processed__{process_name}.csv")
-    saved_file_path.parent.mkdir(exist_ok=True, parents=True)
     df.to_csv(saved_file_path, index=use_index)
 
 
-def concat_processed_data(): # TODO currently in utils but should move to a better place
+def concat_processed_data():  # TODO currently in utils but should move to a better place
     processed_data_parts = []
     for file_path in PROCESSED_DATA_CSV_FILES_PATH.glob(f"{DATA_DATE_STRING}/*.csv"):
         saved_processed_data_part = pd.read_csv(file_path)
@@ -52,8 +57,8 @@ def concat_processed_data(): # TODO currently in utils but should move to a bett
 
 
 def get_upstream_tasks_outputs(context, with_task_ids_as_keys=False, remove_none_values=False):
-    task_ids = context['task'].upstream_task_ids
-    task_outputs = context['task_instance'].xcom_pull(task_ids=task_ids)
+    task_ids = context[TASK].upstream_task_ids
+    task_outputs = context[TASK_INSTANCE].xcom_pull(task_ids=task_ids)
 
     if with_task_ids_as_keys:
         task_id_to_task_output = {}
