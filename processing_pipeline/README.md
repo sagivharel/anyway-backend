@@ -42,6 +42,8 @@ In your terminal (in the projects' folder):
 
 ### Conventions:
 - task_id is equal to the variable name and it's written like this: `[module_name]__[function_name]`
+- Where the Operator has `provide_context=True` argument the equivalent task function has to get `**context` as argument
+
 
 # TODOs
 - Get all the data from the Drive / Google's bucket
