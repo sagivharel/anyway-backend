@@ -25,7 +25,6 @@ def create_json_file(**context):
 
 def create_second_txt_file(file_name, **context):
     data = get_upstream_tasks_outputs(context, with_task_ids_as_keys=True, remove_none_values=False)
-    # file_name = "testing_file2"
     with open(f"{file_name}.txt", "w") as file:
         file.write(str(data))
 
