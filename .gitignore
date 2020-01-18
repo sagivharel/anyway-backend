@@ -1,8 +1,8 @@
 /.idea/
 __pycache__/
-processing_pipeline/airflow.cfg
-processing_pipeline/airflow.db
-processing_pipeline/unittests.cfg
-processing_pipeline/airflow-webserver.pid
-processing_pipeline/logs/
-processing_pipeline/dags/csv_files/
+airflow.cfg
+airflow.db
+unittests.cfg
+airflow-webserver.pid
+logs/
+processing_pipeline/csv_files/

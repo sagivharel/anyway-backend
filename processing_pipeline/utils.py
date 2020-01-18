@@ -11,7 +11,7 @@ FINAL_PROCESSED_DATA_CSV_FILES_PATH = Path(PROCESSING_PIPELINE_DAGS_FOLDER_PATH,
 FINAL_PROCESSED_DATA_CSV_FILES_PATH.mkdir(exist_ok=True, parents=True)
 
 with Path(PROCESSING_PIPELINE_DAGS_FOLDER_PATH, "pipeline_configuration.yaml").open() as pipeline_configuration_file:
-    pipeline_configuration = yaml.load(pipeline_configuration_file)
+    pipeline_configuration = yaml.load(pipeline_configuration_file, Loader=yaml.BaseLoader)
 
 DATA_DATE_STRING = pipeline_configuration["data_date_string"]
 
