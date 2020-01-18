@@ -1,3 +1,4 @@
+PyYAML
 apache-airflow
 alembic
 amqp
