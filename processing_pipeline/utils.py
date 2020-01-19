@@ -45,13 +45,8 @@ def save_processed_data(df, saved_file_path, use_index=True):
     df.to_csv(saved_file_path, index=use_index)
 
 
-def concat_processed_data():  # TODO currently in utils but should move to a better place
-    processed_data_parts = []
-    for file_path in PROCESSED_DATA_CSV_FILES_PATH.glob(f"{DATA_DATE_STRING}/*.csv"):
-        saved_processed_data_part = pd.read_csv(file_path)
-        processed_data_parts.append(saved_processed_data_part)
-
-    processed_data = pd.concat(processed_data_parts, axis=1)
+def concat_processed_data(**context):  # TODO currently in utils but should move to a better place
+    processed_data = get_upstream_tasks_output_concat_df(context, remove_none_values=True)
     saved_file_path = Path(FINAL_PROCESSED_DATA_CSV_FILES_PATH, f"processed__{DATA_DATE_STRING}.csv")
     processed_data.to_csv(saved_file_path, index=False)
 
@@ -72,3 +67,15 @@ def get_upstream_tasks_outputs(context, with_task_ids_as_keys=False, remove_none
         if remove_none_values:
             task_outputs = [task_output for task_output in task_outputs if task_output is not None]
         return task_outputs
+
+
+def get_upstream_tasks_output_concat_df(context, with_task_ids_as_keys=False, remove_none_values=False):
+    upstream_tasks_output_dfs = []
+    for upstream_tasks_output_file_path in get_upstream_tasks_outputs(context,
+                                                                      with_task_ids_as_keys,
+                                                                      remove_none_values):
+        upstream_tasks_output_df = load_data(upstream_tasks_output_file_path, processed_data=True)
+        upstream_tasks_output_dfs.append(upstream_tasks_output_df)
+
+    df = pd.concat(upstream_tasks_output_dfs, axis=1)
+    return df
