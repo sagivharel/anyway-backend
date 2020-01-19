@@ -1,56 +1,46 @@
 # AirFlow Processing Pipeline:
 ### Important notes
-- airflow sees the dags folder as root so you also need to mark the "dags" folder as a source root folder.
-(If you are using pycharm:
-    go to the Settings -> Project -> Project Structure -> click on the 'dags' folder and mark it as source)
+- airflow sees the processing_pipeline folder as root so you also need to mark the "processing_pipeline" folder as a source root folder.
+(If you are using pycharm: go to the Settings -> Project -> Project Structure -> click on the "processing_pipeline" folder and mark it as source)
 
 ### Folder structure:
-The 'dags' folder structure is as follows:   
+The 'processing_pipeline' folder structure is as follows:   
     
 ##### Files:
 - anyway_processing.py : the main python file which contains the airflow DAG object which controls the pipeline
 - data_source_fetching.py : contains functions to get the raw data from the Drive / Bucket  
 - utils.py : contains util functions like data loading
+- constants.py :  contains constants
+- pipeline_configuration.yaml : contains some key configurations for the pipeline like the data date string
+- processing_example.py : an example -> can be ignored
 
 ##### Folders:
-
-- cleaning: please put all the python functions which relate to cleaning the data
-- mapping: please put all the python functions which relate to cleaning the data
-- transformation: please put all the python functions which relate to transforming the data (making new columns, aggregating  etc)
-- validation: please put all the python functions which relate to  the data
-- csv_files: contain the raw and processed data csv files (created in the python file process if not exists)
+- cleaning, mapping, transformation, validation: folders which should contain python functions
+- csv_files: folder which contains the raw and processed data csv files (created in the python file process if not exists)
 
 -----------------------
 ### AirFlow setup
-In your terminal (in the projects' folder):
-- run `export AIRFLOW_HOME=`pwd`/processing_pipeline`
-- run `airflow version`
-- In airflow.cfg change `load_examples = True` to `load_examples = False`
-- run `airflow initdb` # TODO: change this to work with postgresql
+If it's the first time you run AirFlow:
+Setup the Airflow env by running in your terminal (in the projects' folder):  `bash airflow_setup.sh`
 
-
-### AirFlow UI
-In your terminal (in the projects' folder):
-- run `airflow webserver`
-- Go to http://localhost:8080/admin/
-
-
-### AirFlow Run:
-- run "export AIRFLOW_HOME=`pwd`/processing_pipeline" in your terminal (in the projects' folder)
-- run `airflow scheduler`
+### Use AirFlow
+After setting up the AirFlow env
+please open 2 terminal windows (in the projects' folder) and run these commands (each in a separate terminal window):
+- `bash airflow_webserver.sh` - will start the AirFlow UI (go to http://localhost:8080/admin/)
+- `bash airflow_scheduler.sh` - will start the scheduler, now you will be able to run your jobs
 
 
 ### Conventions:
-- task_id is equal to the variable name and it's written like this: `[module_name]__[function_name]`
 - Where the Operator has `provide_context=True` argument the equivalent task function has to get `**context` as argument
 
+-----------------------
 
 # TODOs
 - Get all the data from the Drive / Google's bucket
 - Change the DB to be PostgreSQL
+- Multiprocessing
 
-
-
+-----------------------
 
 ### useful links:
 - http://michal.karzynski.pl/blog/2017/03/19/developing-workflows-with-apache-airflow/
