@@ -6,14 +6,14 @@ from airflow.operators.python_operator import PythonOperator
 from cleaning.missing_and_unknown_values import replace_minus_one_with_null
 from constants import MAHOZ, X, Y
 from transformation.new_columns_creation import create_xy_column
-from utils import concat_processed_data
+from utils import concat_processed_data, leave_the_same_way
 
 dag = DAG('anyway_processing_pipeline',
           schedule_interval=None,
           start_date=datetime(2020, 1, 1),
           concurrency=os.cpu_count())
 
-SOURCE_FILE_NAME = "klali_08Jan_0930_AccData.csv"
+SOURCE_FILE_NAME = "klali_08Jan_0930_AccData.csv"  # TODO: create this as an argument, use glob
 
 replace_minus_one_with_null__mahoz = PythonOperator(task_id='replace_minus_one_with_null__mahoz',
                                                     python_callable=replace_minus_one_with_null,
@@ -36,6 +36,13 @@ replace_minus_one_with_null__x = PythonOperator(task_id='replace_minus_one_with_
 transformation__create_xy_column = PythonOperator(task_id='transformation__create_xy_column',
                                                   python_callable=create_xy_column,
                                                   dag=dag, provide_context=True)
+
+leave_the_same_way__pk_teuna_fikt = PythonOperator(task_id='leave_the_same_way__pk_teuna_fikt',
+                                                   python_callable=leave_the_same_way,
+                                                   op_kwargs={"file_name": SOURCE_FILE_NAME,
+                                                              "columns": ["pk_teuna_fikt"]},
+                                                   dag=dag, provide_context=True)
+
 
 utils__concat_processed_data = PythonOperator(task_id='utils__concat_processed_data',
                                               python_callable=concat_processed_data,

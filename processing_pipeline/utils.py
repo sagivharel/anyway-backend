@@ -79,3 +79,12 @@ def get_upstream_tasks_output_concat_df(context, with_task_ids_as_keys=False, re
 
     df = pd.concat(upstream_tasks_output_dfs, axis=1)
     return df
+
+
+def leave_the_same_way(file_name, columns, **context):  # TODO rename this to a better function name
+    df = load_data(file_name, raw_data=True)
+    selected_columns_df = df[columns]
+
+    saved_file_path = get_saved_file_path(context[TASK].task_id)
+    save_processed_data(selected_columns_df, saved_file_path, use_index=False)
+    return saved_file_path
