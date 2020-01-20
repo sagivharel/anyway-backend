@@ -1,3 +1,5 @@
+PyYAML
+apache-airflow
 alembic
 amqp
 aniso8601
