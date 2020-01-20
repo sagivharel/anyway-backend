@@ -40,6 +40,8 @@ please open 2 terminal windows (in the projects' folder) and run these commands 
 - Get all the data from the Drive / Google's bucket
 - Change the DB to be PostgreSQL
 - Multiprocessing
+- Save to DB whe finished
+- Use the config file to find on which file to run 
 
 -----------------------
 
