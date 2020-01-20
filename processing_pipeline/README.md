@@ -32,6 +32,7 @@ please open 2 terminal windows (in the projects' folder) and run these commands 
 
 ### Conventions:
 - Where the Operator has `provide_context=True` argument the equivalent task function has to get `**context` as argument
+- task_id should be the same as your variable name
 
 -----------------------
 
