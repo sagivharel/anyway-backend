@@ -1,5 +1,9 @@
 FROM ubuntu:19.10
 
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
+
+
 # Install system tools
 RUN apt-get clean && \
     apt-get -y update && \
@@ -11,9 +15,13 @@ RUN apt-get clean && \
 
     apt-get clean
 
+
 WORKDIR /anyway
 
 COPY requirements.txt /anyway
+COPY  alembic.ini /anyway
+COPY  alembic /anyway/alembic
+
 
 RUN virtualenv /venv3 -p python3
 
@@ -21,8 +29,8 @@ RUN virtualenv /venv3 -p python3
 RUN . /venv3/bin/activate && \
                     pip install -U setuptools wheel && \
                     pip install --upgrade pip && \
-                    pip install -r requirements.txt
+                    pip install -r requirements.txt && \
+					alembic upgrade head
 COPY . /anyway
-
 
 CMD . /venv3/bin/activate && FLASK_APP=anyway FLASK_DEBUG=1 flask run --host 0.0.0.0
