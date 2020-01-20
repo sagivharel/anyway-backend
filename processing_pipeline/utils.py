@@ -39,10 +39,13 @@ def get_saved_file_path(process_task_id):
     return saved_file_path
 
 
-def save_processed_data(df, saved_file_path, use_index=True):
-    if not isinstance(df, pd.DataFrame):
-        raise ValueError("df argument is suppose to be a pandas' DataFrame")
-    df.to_csv(saved_file_path, index=use_index)
+def save_processed_data(df_or_series, saved_file_path, use_index=True):
+    if isinstance(df_or_series, pd.DataFrame):
+        df_or_series.to_csv(saved_file_path, index=use_index)
+    elif isinstance(df_or_series, pd.Series):
+        df_or_series.to_csv(saved_file_path, header=True, index=use_index)
+    else:
+        raise ValueError("df argument is suppose to be a pandas' DataFrame or Series")
 
 
 def concat_processed_data(**context):  # TODO currently in utils but should move to a better place
