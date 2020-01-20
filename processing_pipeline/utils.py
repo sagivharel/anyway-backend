@@ -17,7 +17,7 @@ with Path(PROCESSING_PIPELINE_DAGS_FOLDER_PATH, "pipeline_configuration.yaml").o
 DATA_DATE_STRING = pipeline_configuration["data_date_string"]
 
 
-def load_data(file_name, raw_data=False, processed_data=False):
+def load_data(file_name: str, raw_data=False, processed_data=False) -> pd.DataFrame:
     if raw_data and processed_data:
         raise ValueError("arguments 'raw_data' and 'processed_data' can't be both True")
     if not raw_data and not processed_data:
@@ -33,13 +33,13 @@ def load_data(file_name, raw_data=False, processed_data=False):
     return df
 
 
-def get_saved_file_path(process_task_id):
+def get_saved_file_path(process_task_id: str) -> Path:
     saved_file_path = Path(PROCESSED_DATA_CSV_FILES_PATH, DATA_DATE_STRING, f"processed__{process_task_id}.csv")
     saved_file_path.parent.mkdir(exist_ok=True, parents=True)
     return saved_file_path
 
 
-def save_processed_data(df_or_series, saved_file_path, use_index=True):
+def save_processed_data(df_or_series: (pd.DataFrame, pd.Series), saved_file_path: Path, use_index=True):
     if isinstance(df_or_series, pd.DataFrame):
         df_or_series.to_csv(saved_file_path, index=use_index)
     elif isinstance(df_or_series, pd.Series):
@@ -84,7 +84,7 @@ def get_upstream_tasks_output_concat_df(context, with_task_ids_as_keys=False, re
     return df
 
 
-def leave_the_same_way(file_name, columns, **context):  # TODO rename this to a better function name
+def leave_the_same_way(file_name: str, columns: (list, tuple), **context) -> Path:  # TODO rename this to a better function name
     df = load_data(file_name, raw_data=True)
     selected_columns_df = df[columns]
 
