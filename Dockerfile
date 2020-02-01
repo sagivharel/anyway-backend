@@ -20,12 +20,15 @@ COPY  alembic /anyway/alembic
 
 
 RUN virtualenv /venv3 -p python3
+ENV VIRTUAL_ENV=/venv3
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # First copy only the requirement.txt, so changes in other files won't trigger a full pip reinstall
 RUN . /venv3/bin/activate && \
                     pip install -U setuptools wheel && \
                     pip install --upgrade pip && \
                     pip install -r requirements.txt
+
 
 COPY . /anyway
 
