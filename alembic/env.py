@@ -4,7 +4,12 @@ from sqlalchemy import pool
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from alembic import context
+import sys
 import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+from anyway.core.database import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -19,12 +24,6 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-
-SQLALCHEMY_DATABASE_URI=os.environ.get('DATABASE_URL')
-engine = create_engine(SQLALCHEMY_DATABASE_URI, convert_unicode=True, echo=False)
-Base = declarative_base()
-
-
 target_metadata = Base.metadata
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
