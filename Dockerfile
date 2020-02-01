@@ -22,7 +22,7 @@ COPY  alembic /anyway/alembic
 RUN virtualenv /venv3 -p python3
 ENV VIRTUAL_ENV=/venv3
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-ENV DATABASE_URL=postgresql://anyway:anyway@db/anyway
+ENV DATABASE_URL='postgresql://anyway:anyway@db/anyway'
 
 # First copy only the requirement.txt, so changes in other files won't trigger a full pip reinstall
 RUN . /venv3/bin/activate && \
