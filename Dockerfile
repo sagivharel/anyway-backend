@@ -1,5 +1,7 @@
 FROM ubuntu:19.10
 
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
 
 # Install system tools
 RUN apt-get clean && \
