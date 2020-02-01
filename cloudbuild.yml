@@ -1,0 +1,23 @@
+steps:
+# build anyway-backend image
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker build -t eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA --build-arg DATABASE_URL=$$DATABASE_URL .']
+  secretEnv: ['DATABASE_URL']
+# push anyway-backend image into cloud repository
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA']
+# deploy anyway-backend image into kubernetes 
+- name: 'gcr.io/cloud-builders/gke-deploy'
+  args:
+  - run
+  - --image=eu.gcr.io/$PROJECT_ID/$PROJECT_ID:$COMMIT_SHA
+  - --location=europe-west3
+  - --cluster=anyway-dev-cluster-1
+#db url encrypted
+secrets:
+- kmsKeyName: projects/anyway-backend/locations/europe-west3/keyRings/anyway-backend-keyring/cryptoKeys/DATABASE_URL
+  secretEnv:
+    DATABASE_URL: CiQASV7vvYmDJo7qSKmQGKnKc8hqgn55iY9+qftxWJd6Fu4hZJwSZwCKoLTL15gDA+nIHFQKjBy7I9TjkAx76Vc5b7hjbGkoAqTdAfzgL6Xieu+IcDhp/qeTJJzOrVw0S46lEC3lC6Vh6vwOoBQQ6wXMTHDhgjlI54ovXyygzAhsevuDLFJKp+VtvWFLAao=
+    
+    
