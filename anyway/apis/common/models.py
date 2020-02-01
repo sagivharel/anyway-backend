@@ -532,3 +532,24 @@ class Vehicle(Base):
 
     def get_id(self):
         return self.id
+
+
+class WazeAlert(Base):
+    __tablename__ = "waze_alerts"
+    
+    id = Column(BigInteger(), primary_key=True)
+    city = Column(Text())
+    confidence = Column(Integer())
+    created_at = Column(DateTime, index=True)
+    lontitude = Column(Float())
+    latitude = Column(Float())
+    magvar = Column(Integer())
+    number_thumbs_up = Column(Integer())
+    report_rating = Column(Integer())
+    reliability = Column(Integer())
+    alert_type = Column(Text())
+    alert_subtype = Column(Text())
+    uuid = Column(Text())
+    street = Column(Text())
+    road_type = Column(Integer())
+    geom = Column(Geometry('POINT'))
