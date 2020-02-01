@@ -1,1 +1,8 @@
 /.idea/
+__pycache__/
+airflow.cfg
+airflow.db
+unittests.cfg
+airflow-webserver.pid
+logs/
+processing_pipeline/csv_files/
