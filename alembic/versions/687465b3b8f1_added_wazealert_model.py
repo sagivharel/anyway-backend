@@ -7,6 +7,8 @@ Create Date: 2020-02-01 21:53:06.593331
 """
 from alembic import op
 import sqlalchemy as sa
+import geoalchemy2 
+
 
 
 # revision identifiers, used by Alembic.
