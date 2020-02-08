@@ -2,7 +2,7 @@ from google.cloud import storage
 import pandas as pd
 from pandas.io.json import json_normalize
 import json
-from waze.waze_db_functions import insert_waze_alerts, insert_waze_traffic_jams
+from .waze_db_functions import insert_waze_alerts, insert_waze_traffic_jams
 
 def list_blobs(bucket_name):
     """
@@ -23,8 +23,9 @@ def parse_waze_alerts_data(waze_alerts):
 
     waze_df = json_normalize(waze_alerts)
     waze_df['created_at'] = pd.to_datetime(waze_df['pubMillis'], unit='ms')
-    waze_df.rename({'location.x': 'latitude', 'location.y': 'lonitude'}, axis=1, inplace=True)
+    waze_df.rename({'location.x': 'latitude', 'location.y': 'lontitude'}, axis=1, inplace=True)
     waze_df['geometry'] = waze_df.apply(lambda row: 'POINT({} {})'.format(row['lonitude'], row['latitude']), axis=1)
+    waze_df['roadType'] = waze_df['roadType'].fillna(-1) 
     waze_df.drop(['country', 'pubMillis', 'reportDescription'], axis=1, inplace=True)
 
     return waze_df
@@ -41,6 +42,7 @@ def parse_waze_traffic_jams_data(waze_jams):
     waze_df['created_at'] = pd.to_datetime(waze_df['pubMillis'], unit='ms')
     waze_df['geometry'] = waze_df['line'].apply(lambda l: 'LINESTRING({})'.format(','.join(['{} {}'.format(nz['x'], nz['y']) for nz in l])))
     waze_df.drop(['country', 'pubMillis'], axis=1, inplace=True)
+    waze_df['turnType'] = waze_df['roadType'].fillna(-1) 
 
     return waze_df
 

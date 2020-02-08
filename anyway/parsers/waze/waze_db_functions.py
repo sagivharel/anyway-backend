@@ -24,7 +24,7 @@ def insert_waze_alerts(waze_alerts_df):
             'street': alert['street'],
             'road_type': alert['roadType'],
             'geom': alert['geometry']
-        } for alert in waze_alerts_df.iterrows()]
+        } for i, alert in waze_alerts_df.iterrows()]
 
     db.session.bulk_insert_mappings(WazeAlert, waze_alerts)
     db.session.commit()
@@ -55,7 +55,7 @@ def insert_waze_traffic_jams(waze_traffic_jams_df):
             'start_node': jam['startNode'],
             'created_at': jam['created_at'],
             'geom': jam['geometry']
-        } for jam in waze_traffic_jams_df.iterrows()]
+        } for i, jam in waze_traffic_jams_df.iterrows()]
 
     db.session.bulk_insert_mappings(WazeTrafficJams, waze_traffic_jams)
     db.session.commit()
