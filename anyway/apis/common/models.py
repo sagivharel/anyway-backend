@@ -553,3 +553,29 @@ class WazeAlert(Base):
     street = Column(Text())
     road_type = Column(Integer())
     geom = Column(Geometry('POINT'))
+
+
+class WazeTrafficJams(Base):
+    __tablename__ = "waze_trafic_jams"
+    
+    id = Column(BigInteger(), primary_key=True)
+    level = Column(Integer())
+    line = Column(Text())
+    speed_kmh = Column(Integer())
+    turn_type = Column(Integer())
+    length = Column(Float())
+    type = Column(Text())
+    uuid = Column(Text())
+    speed = Column(Integer())
+    segments = Column(Text())
+    road_type = Column(Integer())
+    delay = Column(Integer()) 
+    street = Column(Text())
+    city = Column(Text())
+    end_node = Column(Text())
+    blocking_alert_uuid = Column(Text())
+    start_node = Column(Text())
+    created_at = Column(DateTime, index=True)
+    geom = Column(Geometry('LINESTRING'))
+
+
