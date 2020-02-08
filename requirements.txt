@@ -136,3 +136,4 @@ xlrd
 yuicompressor
 zipp
 zope.interface
+google-cloud-storage
