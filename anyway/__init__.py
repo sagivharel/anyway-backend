@@ -35,6 +35,9 @@ app.config['OAUTH_CREDENTIALS'] = {
 app.config['RESTPLUS_MASK_SWAGGER'] = False
 
 db = SQLAlchemy(app)
+
+from anyway.apis.common.models import cbs_models, news_flash_models, schools_models, public_models, mobile_app_models
+
 assets = Environment()
 assets.init_app(app)
 assets_env = AssetsEnvironment(os.path.join(config._PROJECT_ROOT, 'static'), '/static')

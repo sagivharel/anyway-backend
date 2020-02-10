@@ -3,7 +3,7 @@ import json, os
 from anyway import db
 from anyway.core.utils import Utils
 from anyway.core.constants import CONST
-from anyway.apis.common.models import AccidentMarker
+from anyway.apis.common.models.cbs_models import AccidentMarker
 
 from flask_restplus import Namespace, Resource, fields
 from openpyxl import load_workbook

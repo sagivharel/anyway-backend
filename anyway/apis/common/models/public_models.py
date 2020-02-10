@@ -19,13 +19,13 @@ from sqlalchemy import (Column,
                         and_,
                         ForeignKeyConstraint
                         )
-
+from sqlalchemy.schema import CheckConstraint, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship, load_only
 
 from anyway.core.localization import Localization
 from anyway.core.utils import Utils
 from anyway.core.constants import CONST
-from anyway.core.database import Base
+from anyway.core.database import Base, CBSBase
 from anyway import db
 
 MarkerResult = namedtuple('MarkerResult', ['accident_markers', 'rsa_markers', 'total_records'])
@@ -55,6 +55,16 @@ class MarkerMixin(Point):
         name = Utils.decode_hebrew(Localization.get_field(field), db_encoding)
         return u"{0}: {1}".format(name, value)
 
+class SpatialRefSys(Base):
+    __tablename__ = "spatial_ref_sys"
+    __table_args__ = (CheckConstraint('(srid > 0) AND (srid <= 998999)', name='spatial_ref_sys_srid_check'), \
+                      PrimaryKeyConstraint("srid", name="spatial_ref_sys_pkey"),)
+
+    srid = Column(Integer(), autoincrement=False, nullable=False)
+    auth_name = Column(String(length=256), autoincrement=False, nullable=True)
+    auth_srid= Column(Integer(), autoincrement=False, nullable=True)
+    srtext = Column(String(length=2048), autoincrement=False, nullable=True)
+    proj4text = Column(String(length=2048), autoincrement=False, nullable=True)
 
 class AccidentMarker(MarkerMixin, Base):
     __tablename__ = "markers"
@@ -101,8 +111,6 @@ class AccidentMarker(MarkerMixin, Base):
     cross_mode = Column(Integer())
     cross_location = Column(Integer())
     cross_direction = Column(Integer())
-    involved = relationship("Involved")
-    vehicles = relationship("Vehicle")
     video_link = Column(Text())
     road1 = Column(Integer())
     road2 = Column(Integer())
@@ -391,152 +399,9 @@ class AccidentMarker(MarkerMixin, Base):
             longitude=data["longitude"]
         )
 
-
-class Involved(Base):
-    __tablename__ = "involved"
-    id = Column(BigInteger(), primary_key=True)
-    provider_and_id = Column(BigInteger())
-    provider_code = Column(Integer())
-    file_type_police = Column(Integer())
-    accident_id = Column(BigInteger())
-    involved_type = Column(Integer())
-    license_acquiring_date = Column(Integer())
-    age_group = Column(Integer())
-    sex = Column(Integer())
-    vehicle_type = Column(Integer())
-    safety_measures = Column(Integer())
-    involve_yishuv_symbol = Column(Integer())
-    involve_yishuv_name = Column(Text())
-    injury_severity = Column(Integer())
-    injured_type = Column(Integer())
-    injured_position = Column(Integer())
-    population_type = Column(Integer())
-    home_region = Column(Integer())
-    home_district = Column(Integer())
-    home_natural_area = Column(Integer())
-    home_municipal_status = Column(Integer())
-    home_yishuv_shape = Column(Integer())
-    hospital_time = Column(Integer())
-    medical_type = Column(Integer())
-    release_dest = Column(Integer())
-    safety_measures_use = Column(Integer())
-    late_deceased = Column(Integer())
-    car_id = Column(Integer())
-    involve_id = Column(Integer())
-    accident_year = Column(Integer())
-    accident_month = Column(Integer())
-    injury_severity_mais = Column(Integer())
-    __table_args__ = (ForeignKeyConstraint([accident_id, provider_code, accident_year],
-                                           [AccidentMarker.id,
-                                            AccidentMarker.provider_code,
-                                            AccidentMarker.accident_year],
-                                           ondelete="CASCADE"),
-                      Index('accident_id_idx_involved', 'accident_id', unique=False),
-                      Index('provider_and_id_idx_involved', 'provider_and_id', unique=False),
-                      {})
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "provider_code": self.provider_code,
-            "accident_id": self.accident_id,
-            "involved_type": self.involved_type,
-            "license_acquiring_date": self.license_acquiring_date,
-            "age_group": self.age_group,
-            "sex": self.sex,
-            "vehicle_type": self.vehicle_type,
-            "safety_measures": self.safety_measures,
-            "involve_yishuv_symbol": self.involve_yishuv_symbol,
-            "injury_severity": self.injury_severity,
-            "injured_type": self.injured_type,
-            "injured_position": self.injured_position,
-            "population_type": self.population_type,
-            "home_region": self.home_region,
-            "home_district": self.home_district,
-            "home_natural_area": self.home_natural_area,
-            "home_municipal_status": self.home_municipal_status,
-            "home_yishuv_shape": self.home_yishuv_shape,
-            "hospital_time": self.hospital_time,
-            "medical_type": self.medical_type,
-            "release_dest": self.release_dest,
-            "safety_measures_use": self.safety_measures_use,
-            "late_deceased": self.late_deceased
-        }
-
-    # Flask-Login integration
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.id
-
-
-class Vehicle(Base):
-    __tablename__ = "vehicles"
-    id = Column(BigInteger(), primary_key=True)
-    provider_and_id = Column(BigInteger())
-    provider_code = Column(Integer())
-    file_type_police = Column(Integer())
-    accident_id = Column(BigInteger())
-    engine_volume = Column(Integer())
-    manufacturing_year = Column(Integer())
-    driving_directions = Column(Integer())
-    vehicle_status = Column(Integer())
-    vehicle_attribution = Column(Integer())
-    vehicle_type = Column(Integer())
-    seats = Column(Integer())
-    total_weight = Column(Integer())
-    car_id = Column(Integer())
-    accident_year = Column(Integer())
-    accident_month = Column(Integer())
-    vehicle_damage = Column(Integer())
-    __table_args__ = (ForeignKeyConstraint([accident_id, provider_code, accident_year],
-                                           [AccidentMarker.id,
-                                            AccidentMarker.provider_code,
-                                            AccidentMarker.accident_year],
-                                           ondelete="CASCADE"),
-                      Index('accident_id_idx_vehicles', 'accident_id', unique=False),
-                      Index('provider_and_id_idx_vehicles', 'provider_and_id', unique=False),
-                      {})
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "provider_code": self.provider_code,
-            "accident_id": self.accident_id,
-            "engine_volume": self.engine_volume,
-            "manufacturing_year": self.manufacturing_year,
-            "driving_directions": self.driving_directions,
-            "vehicle_status": self.vehicle_status,
-            "vehicle_attribution": self.vehicle_attribution,
-            "vehicle_type": self.vehicle_type,
-            "seats": self.seats,
-            "total_weight": self.total_weight
-        }
-
-    # Flask-Login integration
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.id
-
-
 class WazeAlert(Base):
     __tablename__ = "waze_alerts"
-    
+
     id = Column(BigInteger(), primary_key=True)
     city = Column(Text())
     confidence = Column(Integer())
@@ -553,3 +418,4 @@ class WazeAlert(Base):
     street = Column(Text())
     road_type = Column(Integer())
     geom = Column(Geometry('POINT'))
+

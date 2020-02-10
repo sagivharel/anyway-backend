@@ -238,19 +238,19 @@ class Localization():
             "VEHICLE_TYPE": "סוג רכב",
             "VIOLATION_TYPE": "סוג עבירה"
         }
-        _cities = pd.read_csv("anyway/static/data/cities.csv", encoding="utf-8", index_col=field_names.sign)
+        _cities = pd.read_csv("data/cities.csv", encoding="utf-8", index_col=field_names.sign)
 
-    def get_field(self, field, value=None):
+    def get_field(self,field, value=None):
         if value:
             table = self._tables.get(field, None)
             return table.get(value, None) if table else None
 
         return self._fields.get(field, None)
 
-    def get_supported_tables(self):
+    def get_supported_tables(self,):
         return self._tables.keys()
 
-    def get_city_name(self, symbol_id):
+    def get_city_name(self,symbol_id):
         try:
             city = self._cities.loc[symbol_id, field_names.name]
             return city
