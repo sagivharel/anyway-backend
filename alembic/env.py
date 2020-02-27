@@ -8,7 +8,7 @@ import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-from anyway.core.database import Base, CBSBase, NewsFlashBase, SchoolshBase, MobileAppBase
+from anyway.core.database import Base, CBSBase, NewsFlashBase, SchoolshBase, MobileAppBase, WazeBase
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
